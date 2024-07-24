@@ -1,0 +1,11 @@
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVra2VsaSIsImlkIjoiNjQ3MzM0N2FiMWJlMzA3YThkOWIxYmY0IiwiaWF0IjoxNjg2MTMxMDMyfQ.xIeK3ru6_-se0p9zrtRu3U5RGO6nVaRNZpxtIYvn_r8
+
+{
+  "title": "Tehtava 5.1 testiblogi",
+  "author": "Matti Meikäläinen",
+  "url": "www.juu.fi",
+  "likes": 1,
+  "user": "6473347ab1be307a8d9b1bf4"
+}

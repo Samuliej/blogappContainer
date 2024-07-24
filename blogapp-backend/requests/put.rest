@@ -1,0 +1,9 @@
+PUT http://localhost:3001/api/blogs/639c735d1d3881c903c4c2fc
+Content-Type: application/json
+
+{
+    "title": "Muokataan blogia async/await",
+    "author": "Samppa",
+    "url": "muokattublogi.com",
+    "likes": 5
+}
