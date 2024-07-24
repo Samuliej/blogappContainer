@@ -1,4 +1,4 @@
-import axios from 'axios'
+import api from '../utils/api.js'
 const baseUrl = '/api/blogs'
 
 let token = null
@@ -8,7 +8,7 @@ const setToken = newToken => {
 }
 
 const getAll = () => {
-  const request = axios.get(baseUrl)
+  const request = api.get(baseUrl)
   return request.then(response => response.data)
 }
 
@@ -22,7 +22,7 @@ const like = async (blog) => {
     user: blog.user.id
   }
   try {
-    const response = await axios.put(updatePath, likedBlog)
+    const response = await api.put(updatePath, likedBlog)
     return response.data
   } catch (exception) {
     console.log(exception.message)
@@ -36,8 +36,7 @@ const remove = async (blogId) => {
 
   const deletePath = `${baseUrl}/${blogId}`
   try {
-    console.log('blogs.js remove funktiossa')
-    const response = await axios.delete(deletePath, config)
+    const response = await api.delete(deletePath, config)
     return response.data
   } catch (exception) {
     console.log(exception.message)
@@ -52,7 +51,7 @@ const create = async newObject => {
   console.log('blogs.js create')
   console.log(config)
 
-  const response = await axios.post(baseUrl, newObject, config)
+  const response = await api.post(baseUrl, newObject, config)
   return response.data
 }
 

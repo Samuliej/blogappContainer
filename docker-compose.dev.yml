@@ -1,0 +1,39 @@
+services:
+  blogapp-backend:
+    build:
+      context: ./blogapp-backend
+      dockerfile: dev.Dockerfile
+    env_file:
+      - ./blogapp-backend/server.env
+    volumes:
+      - "./blogapp-backend/:/usr/src/app"
+      - node_modules:/usr/src/app/node_modules
+    restart: "no"
+
+  blogapp-frontend:
+    build:
+      context: ./blogapp-frontend
+      dockerfile: dev.Dockerfile
+    environment:
+      # This overrides the url in dev.Dockerfile
+      - REACT_APP_BACKEND_URL=http://localhost:3000/api
+      # Need this env to access the react frontend through nginx proxy
+      - DANGEROUSLY_DISABLE_HOST_CHECK=true
+      # Change the address for the websocket that handles refreshing
+      - WDS_SOCKET_HOST=127.0.0.1
+    volumes:
+      - "./blogapp-frontend/:/usr/src/app"
+
+  nginx:
+    image: nginx:1.20.1
+    volumes:
+      - ./nginx.dev.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 3000:80
+    container_name: blog-reverse-proxy
+    depends_on:
+      - blogapp-frontend
+      - blogapp-backend
+
+volumes:
+  node_modules:

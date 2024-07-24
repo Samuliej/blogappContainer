@@ -108,8 +108,6 @@ const App = () => {
   }
 
   const handleLike = async (blog) => {
-    console.log('handleLikessa App.js')
-    console.log(blog)
     try {
       // Päivitetään lokaalisti, koska tykkäys tuli turhan hitaasti
       const updatedBlogs = blogs.map((b) => (b.id === blog.id ? { ...b, likes: b.likes + 1 } : b))
@@ -122,7 +120,6 @@ const App = () => {
 
   const handleRemove = async (blog) => {
     try {
-      console.log('App.js remove funktiossa')
       await blogService.remove(blog.id)
       setBlogs(blogs.filter((b) => b.id !== blog.id))
       setNotificationMessage(`Blog ${blog.title} by ${blog.author} removed successfully.`)
