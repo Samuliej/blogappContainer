@@ -1,0 +1,25 @@
+services:
+  blogapp-backend:
+    build:
+      context: ./blogapp-backend
+      dockerfile: Dockerfile
+    command: ["npm", "start"]
+    env_file:
+      - ./blogapp-backend/server.env
+
+  blogapp-frontend:
+    build:
+      context: ./blogapp-frontend
+      dockerfile: Dockerfile
+    command: ["serve", "build"]
+
+  nginx:
+    image: nginx:1.20.1
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 8080:80
+    container_name: blog-reverse-proxy
+    depends_on:
+      - blogapp-frontend
+      - blogapp-backend

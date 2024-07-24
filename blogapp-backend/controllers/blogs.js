@@ -24,7 +24,6 @@ blogsRouter.post('/', async (request, response) => {
   const body = request.body
   // Varmistetaan tokenin oikeellisuus
   const decodedToken = jwt.verify(request.token, process.env.SECRET)
-  console.log(decodedToken)
   if(!decodedToken.id) {
     return response.status(401).json({ error: 'token invalid' })
   }
@@ -64,8 +63,6 @@ blogsRouter.post('/', async (request, response) => {
 
 
 blogsRouter.delete('/:id', async (request, response) => {
-  console.log(request)
-  console.log(request.params.id)
   const blog = await Blog.findById(request.params.id)
   const decodedToken = jwt.verify(request.token, process.env.SECRET)
   if ( blog.user.toString() === decodedToken.id.toString()) {
@@ -94,10 +91,6 @@ blogsRouter.put('/:id', async (request, response) => {
 blogsRouter.post('/:id/comments', async (request, response) => {
   const { id } = request.params
   const { content } = request.body
-
-  console.log(request.body)
-
-  console.log('backend comment content', content)
 
   const blog = await Blog.findById(id)
 
